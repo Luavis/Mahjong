@@ -1,62 +1,57 @@
 <div class="starter-template">
-  <h1>月刊麻雀 마작마작</h1>
-  <p class="lead">Use this document as a way to quickly start any new project.<br> All you get is this text and a mostly barebones HTML document.</p>
+  <%= image_tag "monthly_mahjong.svg", width: 220 %>
+  <p class="lead">숭실에서 마작마작한 사람들의 월간 기록입니다.</p>
 </div>
 <div>
-  <table class="table table-stripped">
+  <table class="table table-hover table-sorter tablesorter tablesorter-default">
     <thead>
     <tr>
-      <th>#</th>
+      <th class="text-center" width="22">#</th>
       <th>이름</th>
-      <th>승점</th>
-      <th>승점률</th>
-      <th>승률</th>
-      <th>12%</th>
-      <th>+%</th>
-      <th>-2%</th>
-      <th>+3%</th>
-      <th>4%</th>
-      <th>승</th>
-      <th>2</th>
-      <th>3</th>
-      <th>4</th>
-      <th>순율</th>
-      <th>국수</th>
+      <th class="text-center">승점</th>
+      <th class="hidden-xxs text-center">승점률</th>
+      <th class="text-center">승률</th>
+      <th class="hidden-xs text-center">1,2%</th>
+      <th class="hidden-xs text-center">+%</th>
+      <th class="hidden-xs text-center">-2%</th>
+      <th class="hidden-xs text-center">+3%</th>
+      <th class="hidden-xs text-center">4%</th>
+      <th class="hidden-xxs text-center">승</th>
+      <th class="hidden-xs text-center">2</th>
+      <th class="hidden-xs text-center">3</th>
+      <th class="hidden-xs text-center">4</th>
+      <th class="hidden-xxs text-center">순율</th>
+      <th class="text-center">국수</th>
     </tr>
     </thead>
     <tbody>
-    <tr>
-
-    </tr>
-    </tbody>
-  </table>
-</div>
-<div>
-  <table class="table table-stripped">
-    <thead>
-    <tr>
-      <th>#</th>
-      <th>이름</th>
-      <th>승점</th>
-      <th>승점률</th>
-      <th>승률</th>
-      <th>12%</th>
-      <th>+%</th>
-      <th>-2%</th>
-      <th>+3%</th>
-      <th>4%</th>
-      <th>승</th>
-      <th>2</th>
-      <th>3</th>
-      <th>4</th>
-      <th>순율</th>
-      <th>국수</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-
-    </tr>
+      <% @month_record.each_with_index do | user, index| %>
+        <tr>
+          <td class="text-center"><%= index + 1%></td>
+          <td><%= user.nickname %></td>
+          <td class="text-right"><%= "%g" % (user.sum_point / 1000.0) %></td>
+          <td class="hidden-xxs text-right"><%= "%g" % ((user.sum_point / 1000.0 / (user.log_count)).round 2) %></td>
+          <td class="text-right"><%= "%g" % (user.logs.from_this_month.where(grade: 0).length / (user.log_count) * 100).round(1) %></td>
+          <td class="hidden-xs text-right"><%= "%g" % (user.logs.from_this_month.where(grade: [0, 1]).length / user.log_count * 100).round(1) %></td>
+          <td class="hidden-xs text-right"><%= "%g" % (user.logs.from_this_month.where("point >= 0").length / user.log_count * 100).round(1) %></td>
+          <td class="hidden-xs text-right"><%= "%g" % (user.logs.from_this_month.where("point < 0 and grade > 2").length / user.log_count * 100).round(1) %></td>
+          <td class="hidden-xs text-right"><%= "%g" % (user.logs.from_this_month.where("point > 0 and grade < 3").length / user.log_count * 100).round(1) %></td>
+          <td class="hidden-xs text-right"><%= "%g" % (user.logs.from_this_month.where(grade: 3).length / user.log_count * 100).round(1) %></td>
+          <td class="hidden-xxs text-center"><%= user.logs.from_this_month.where(grade: 0).length %></td>
+          <td class="hidden-xs text-center"><%= user.logs.from_this_month.where(grade: 1).length %></td>
+          <td class="hidden-xs text-center"><%= user.logs.from_this_month.where(grade: 2).length %></td>
+          <td class="hidden-xs text-center"><%= user.logs.from_this_month.where(grade: 3).length %></td>
+          <td class="hidden-xxs text-right"><%= "%g" %
+              ((
+                  user.logs.from_this_month.where(grade: 0).length +
+                  user.logs.from_this_month.where(grade: 1).length * 2 +
+                  user.logs.from_this_month.where(grade: 2).length * 3 +
+                  user.logs.from_this_month.where(grade: 3).length * 4
+              ) / user.log_count).round(2)
+          %></td>
+          <td class="text-right"><%= "%g" % user.log_count %></td>
+        </tr>
+      <% end %>
     </tbody>
   </table>
 </div>
