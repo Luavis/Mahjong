@@ -7,4 +7,8 @@ class Log < AbstractRecord
   belongs_to :ranking, class_name: Ranking
   belongs_to :nickname, class_name: Nickname
 
+  def self.in_time_range(range)
+    where(created_at: range)
+  end
+
 end
