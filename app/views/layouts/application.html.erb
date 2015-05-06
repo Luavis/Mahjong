@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" ng-app="mh_app">
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -15,14 +15,14 @@
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
 
   <%= javascript_include_tag "jquery.min" %>
+  <%= javascript_include_tag "angular.min" %>
   <%= javascript_include_tag "bootstrap.min"%>
   <%= javascript_include_tag 'jquery.tablesorter.min' %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-
   <%= csrf_meta_tags %>
 </head>
 
-<body>
+<body ng-controller="MainController">
 <nav id="main-navbar" class="navbar navbar-fixed-top">
   <div class="container">
     <div class="navbar-header">

@@ -77,7 +77,7 @@ class RecordController < ApplicationController
     start_month = (quater - 1) * 3 + 1
 
     range = get_range(params[:year], start_month)
-    range.last = range.last + 3.month
+    range = range.begin..(range.last + 3.month)
 
     @range = range
     @record = create_record(@range)

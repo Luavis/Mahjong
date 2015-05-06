@@ -54,19 +54,12 @@
       <% end %>
     </tbody>
   </table>
-
-  <%= form_tag('#') do -%>
-      <select name="type" class="form-control">
-        <option value="daily">일간</option>
-        <option value="monthly" selected>월간</option>
-        <option value="quater">분기간</option>
-        <option value="yearly">연간</option>
-      </select>
-      <select name="year" class="form-control">
-        <option value="daily">일간</option>
-        <option value="monthly" selected>월간</option>
-        <option value="quater">분기간</option>
-        <option value="yearly">연간</option>
-      </select>
-  <% end -%>
+  <select id="search-period" ng-model="search_period" ng-change="search_period_updated()" name="type" class="form-control">
+    <option value="daily">일간</option>
+    <option value="monthly" selected>월간</option>
+    <option value="quater">분기간</option>
+    <option value="yearly">연간</option>
+  </select>
+  <div id="search-selection"></div>
+  <button send-date class="form-control btn btn-primary">전송</button>
 </div>
